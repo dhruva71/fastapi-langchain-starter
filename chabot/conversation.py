@@ -1,5 +1,3 @@
-import os
-
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
 from langchain_core.prompts import ChatPromptTemplate, SystemMessagePromptTemplate, MessagesPlaceholder, \
@@ -7,14 +5,14 @@ from langchain_core.prompts import ChatPromptTemplate, SystemMessagePromptTempla
 from langchain_openai import ChatOpenAI
 
 
-def initialize_langchain_llm() -> LLMChain:
+def initialize_conversation_chain() -> LLMChain:
     # LLM
-    llm = ChatOpenAI()
+    llm = ChatOpenAI(model="gpt-3.5-turbo-1106")
     # Prompt
     prompt = ChatPromptTemplate(
         messages=[
             SystemMessagePromptTemplate.from_template(
-                os.getenv('LANGCHAIN_SYSTEM_MESSAGE')
+                "You are a nice help deskbot having a conversation with a human."
             ),
             # The `variable_name` here is what must align with memory
             MessagesPlaceholder(variable_name="chat_history"),
