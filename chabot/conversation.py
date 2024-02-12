@@ -1,5 +1,6 @@
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
+from langchain_community.chat_message_histories import SQLChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, SystemMessagePromptTemplate, MessagesPlaceholder, \
     HumanMessagePromptTemplate
 from langchain_openai import ChatOpenAI
@@ -8,6 +9,9 @@ from langchain_openai import ChatOpenAI
 def initialize_conversation_chain() -> LLMChain:
     # LLM
     llm = ChatOpenAI(model="gpt-3.5-turbo-1106")
+    chat_message_history = SQLChatMessageHistory(
+        session_id="test_session_id", connection_string="sqlite:///sqlite.db"
+    )
     # Prompt
     prompt = ChatPromptTemplate(
         messages=[
